@@ -15,28 +15,30 @@ def fulfills_rule(rules, current, next):
         else:
             return True
 
-def is_valid_update(rules, update):
+def reorder_invalid_update(rules, update):
     size = len(update)
+    is_updated = False
     for i in range(size - 1):
         for j in range(i+1, size):
             current = update[i]
             next = update[j]
-            if fulfills_rule(rules, current, next) == False:
-                #print(f"Does not fulfill rule")
-                return False
-            else:
+            if fulfills_rule(rules, current, next):
                 continue
-    #print(f"This is a valid update! {update}")
-    return True
+            else:
+                update[i] = next
+                update[j] = current
+                is_updated = True
+    
+    if is_updated:
+        return update
             
 def find_valid_updates(rules, updates):
     valid_updates = []
 
     for update in updates:
-        if is_valid_update(rules, update):
-            valid_updates.append(update)
+        valid_updates.append(reorder_invalid_update(rules, update))
 
-    return valid_updates
+    return [update for update in valid_updates if update is not None]
 
 def get_middle(update):
     middle = math.ceil((len(update) - 1) / 2)
@@ -63,7 +65,7 @@ def parse_updates(updates_list):
     return updates    
 
 if __name__ == "__main__":
-    with open("tst.txt", "r") as file:
+    with open("day5.txt", "r") as file:
         data = file.read()
 
 test = data.split("\n\n")

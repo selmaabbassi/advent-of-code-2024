@@ -1,0 +1,14 @@
+import unittest
+
+from direction import Direction
+
+class TestMain(unittest.TestCase):
+    def test_direction(self):
+        """Test turn right"""
+        current: Direction = Direction.NORTH
+        next = current.turn_right()
+        
+        self.assertEqual(next, Direction.EAST)
+        
+if __name__ == '__main__':
+    unittest.main()

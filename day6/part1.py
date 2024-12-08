@@ -34,6 +34,25 @@ class PathPredictor:
             self.map[current_x][current_y] = "X"
             self.__traverse(next_x, next_y)
             
+    def is_infinite_loop(self, current_x, current_y, visited = {}):
+        next_x, next_y = self.get_next_coordinate(current_x, current_y)
+        
+        visited.setdefault((current_x,current_y), []).append(self.direction)
+        #check if infinite loop
+        if (next_x,next_y) in visited and self.direction in visited[(next_x,next_y)]:
+            #print(f"Infinite loop found at ({current_x},{current_y}) {visited[(next_x,next_y)]}")
+            return 1
+        
+        #no loop
+        if next_x >= len(self.map) or next_x < 0 or next_y >= len(self.map[current_x]) or next_y < 0:
+            return 0
+        
+        if self.map[next_x][next_y] == "#":
+            self.turn_right()
+            return self.is_infinite_loop(current_x, current_y, visited)
+        else:
+            return self.is_infinite_loop(next_x, next_y, visited)    
+            
     def __number_of_distinct_traversed_positions(self, updated_map):
         counter = 0
         for x in range(len(updated_map)):

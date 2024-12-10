@@ -27,12 +27,40 @@ class Grid:
                     antinodes.update([antinode for antinode in self.calculate_antinodes(a,b) if antinode in self.grid])
                 
         return antinodes
+    
+    def calculate_antinodes_part_2(self, A, B):
+        Ax, Ay = A
+        Bx, By = B
+        
+        dx = Ax-Bx
+        dy = Ay-By
+        
+        points = set()
+        for i in range(-50, 50):
+            P1 = (Ax+dx*i,Ay+dy*i)
+            if P1 in self.grid:
+                points.add(P1)
+        
+        return points
+    
+    def find_antinodes_part_2(self):
+        visited = set()
+        antinodes = set()
+        
+        for a, value in self.grid.items():
+            visited.add(a)
+            if value != ".":
+                coordinates_with_value = [k for k, v in self.grid.items() if v == value and k not in visited]
+                for b in coordinates_with_value:
+                    antinodes.update(self.calculate_antinodes_part_2(a,b))
+                
+        return antinodes
 
-def parse_grid():
+def parse_grid(filename):
     grid = {}
     data = []
     
-    with open("day8.txt", "r") as file:
+    with open(filename, "r") as file:
         for line in file:
             chars = list(line.strip())
             data.append(chars)
@@ -44,7 +72,7 @@ def parse_grid():
     return grid
     
 def main():
-    grid = Grid(parse_grid())
+    grid = Grid(parse_grid("day8.txt"))
     antinodes = grid.find_antinodes()
     
     print(f"Unique antinodes is: {len(antinodes)}")

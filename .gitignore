@@ -1,4 +1,5 @@
 *.txt
+/visualizations
 ### IntelliJ IDEA ###
 /.idea
 out/

@@ -1,9 +1,9 @@
 import unittest
 
-from day11.part1 import blink, update_node
+from day11.part1 import update_node
 from utils.Node import Node
 
-class TestHikeTrailFinder(unittest.TestCase):
+class TestDay11Part1(unittest.TestCase):
     def test_split_string(self):
         """Test split string"""
         

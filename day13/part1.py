@@ -41,8 +41,8 @@ class TokenCalculator():
         self.machines = machines
         
     def is_prize_attainable(self, a, b):
-        if a > 100 or b > 100:
-            return False
+        #if a > 100 or b > 100:
+            #return False
         if a % 1 == 0 and b % 1 == 0:
             return True
         
@@ -72,7 +72,7 @@ def create_claw_machine(puzzle_input:str):
     
     Bx, By = int(buttonB[0]), int(buttonB[1])
     Ax, Ay = int(buttonA[0]), int(buttonA[1])
-    Px, Py = int(prize[0]), int(prize[1])
+    Px, Py = int(prize[0])+10000000000000, int(prize[1])+10000000000000
     
     return ClawMachine((Ax,Ay), (Bx,By), (Px,Py))
     

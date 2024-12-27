@@ -31,7 +31,7 @@ class AoC:
     @abstractmethod
     def solve(self, result):
         """Method that must be implemented by subclasses."""
-        print(f"The result of {self.day} is: {result}")
+        print(f"The answer to {self.day} is: {result}")
         pass
             
             

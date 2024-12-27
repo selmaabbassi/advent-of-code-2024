@@ -71,12 +71,29 @@ class RobotPredictor():
     def __init__(self, robots: List[Robot]):
         self.robots: List[Robot] = robots
         
+    def is_robot(self, position):
+        return any(robot.position == position for robot in self.robots)
+    
+    def to_string(self):
+        str = ""
+        lim_x, lim_y = LIMIT
+        for y in range(lim_y):
+            for x in range(lim_x):
+                if self.is_robot((x,y)):
+                    str+="#"
+                else:
+                    str+="."
+            
+            str+="\n"
+        
+        return str
+        
     def predict(self, seconds):
         for _ in range(seconds):
             for robot in self.robots:
                 robot.move()
                 
-        return robots
+        return self.robots
     
     def number_of_robots_after(self, seconds):
         q1 = 0
